@@ -2,6 +2,8 @@
 
 DayTime dayTime = NIGHT;
 bool wind = false;
+int workingDayNumberOfVisitors = 0;
+int weekendDayNumberOfVisitors = 0;
 
 void GeneratorDayTime::ActivateSlopes() {
     for (auto &slope : BlueSlopesSkiLift) {
@@ -38,6 +40,14 @@ void GeneratorDayTime::Behavior() {
     switch (dayTime)
     {
         case NIGHT: // morning
+            if (weekend) {
+                NumberOfVisitorsDuringWeekend(weekendDayNumberOfVisitors);
+                weekendDayNumberOfVisitors = 0;
+            } else {
+                NumberOfVisitorsDuringWorkWeek(workingDayNumberOfVisitors);
+                workingDayNumberOfVisitors = 0;
+            }
+
             dayTime = MORNING;
             ActivateSlopes();
             cashDeskOpened = true;

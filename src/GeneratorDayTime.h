@@ -5,6 +5,7 @@
 #include "macros.h"
 #include "CashDesk.h"
 #include "Slope.h"
+#include "Statistics.h"
 
 enum DayTime {
     MORNING,
@@ -16,6 +17,8 @@ enum DayTime {
 
 extern DayTime dayTime;
 extern bool wind;
+extern int workingDayNumberOfVisitors;
+extern int weekendDayNumberOfVisitors;
 
 class GeneratorDayTime: public Event {
     private:

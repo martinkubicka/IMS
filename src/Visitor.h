@@ -9,6 +9,8 @@
 #include "Slope.h"
 #include "Skilift.h"
 #include "CableCar.h"
+#include "Statistics.h"
+#include "GeneratorWeek.h"
 
 enum Experience {
     NEWBIE,

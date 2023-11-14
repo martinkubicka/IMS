@@ -3,8 +3,8 @@ CFLAGS = -std=c++20 -g -pedantic -Wall -Wextra
 
 all: main
 
-main: main.o GeneratorWeek.o GeneratorVisitor.o GeneratorWeather.o GeneratorDayTime.o Slope.o Visitor.o	GeneratorFailure.o Repair.o Skilift.o CableCar.o
-	$(CC) $(CFLAGS) main.o GeneratorWeek.o GeneratorVisitor.o GeneratorWeather.o GeneratorDayTime.o Slope.o Visitor.o GeneratorFailure.o Repair.o Skilift.o CableCar.o -o main -lsimlib -lm
+main: main.o GeneratorWeek.o GeneratorVisitor.o GeneratorWeather.o GeneratorDayTime.o Slope.o Visitor.o	GeneratorFailure.o Repair.o Skilift.o CableCar.o Statistics.o
+	$(CC) $(CFLAGS) main.o GeneratorWeek.o GeneratorVisitor.o GeneratorWeather.o GeneratorDayTime.o Slope.o Visitor.o GeneratorFailure.o Repair.o Skilift.o CableCar.o Statistics.o -o main -lsimlib -lm
 
 main.o:
 	$(CC) $(CFLAGS) -c src/main.cpp -o main.o -lsimlib -lm
@@ -38,6 +38,9 @@ Skilift.o:
 
 CableCar.o:
 	$(CC) $(CFLAGS) -c src/CableCar.cpp -o CableCar.o -lsimlib -lm
+
+Statistics.o:
+	$(CC) $(CFLAGS) -c src/Statistics.cpp -o Statistics.o -lsimlib -lm
 
 zip:
 	tar -czvf TODO.tar Makefile src/

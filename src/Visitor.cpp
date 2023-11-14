@@ -1,8 +1,5 @@
 #include "Visitor.h"
 
-#include <iostream> // TODO
-using namespace std; // TODO
-
 void Visitor::Ticket() {
     if (Random() <= 0.4 && !cashDeskOpened) { // ticket not bought online
         int shortestQueue = 0;
@@ -176,8 +173,25 @@ void Visitor::Ride() {
 }
 
 void Visitor::GoUp(Slope *slope) {
+    double inQueue = Time;
+
+    if (slope->difficulty == BLUE) {
+        BlueSlopesQueueLength(slope->facility->QueueLen());
+    } else if (slope->difficulty == RED) {
+        RedSlopesQueueLength(slope->facility->QueueLen());
+    } else {
+        BlackSlopesQueueLength(slope->platformCableCar[shortestQueueOfChoosedCableCar].QueueLen());
+    }
+
     if (slope->type == SKI_LIFT) {
         Seize(*slope->facility); // platform
+
+        if (weekend) {
+            VisitorInQueueWeekend(Time - inQueue);
+        } else {
+            VisitorInQueueWorkWeek(Time - inQueue);
+        }
+
         Wait(0.08); // 5 seconds
         if (interrupted) {
             Ride();
@@ -326,6 +340,8 @@ void Visitor::WhatToDo() {
 }
 
 void Visitor::Behavior() {
+    double arrival = Time;
+
     experience = (Experience)((int)(Random()*3));
 
     Wait(Uniform(2, 5)); // going to/around cash desks
@@ -335,4 +351,6 @@ void Visitor::Behavior() {
     Wait(Uniform(1, 3)); // going to ski area
 
     WhatToDo();
+
+    VisitorInSystem(Time - arrival);
 }   

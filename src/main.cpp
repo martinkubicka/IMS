@@ -7,6 +7,7 @@
 #include "GeneratorDayTime.h"
 #include "GeneratorFailure.h"
 #include "Slope.h"
+#include "Statistics.h"
 
 bool cashDeskOpened = false;
 Facility CashDesk[CASHDESK];
@@ -41,12 +42,15 @@ int main() {
     (new GeneratorVisitor)->Activate();
 	
 	Run();
+
+    PrintStatistics();
 }
 
 // todo comments
-// remove todos
-// statistiky
 // todo valgrind
+
+// rozumne upravit statistiky
+// testovanie s roznymi params (viac zakaznikov, prepazky, viac vlekov/cabincarov, vacsia kapacita sedaciek, menej sedaciek/liftov v store,lzsie zjadovky)
 // dokumentacia
 // precitat zadanie
 // todo prepisat automaticky generaovanie slope/facility (slope.h) podla enum

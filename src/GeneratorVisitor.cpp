@@ -8,7 +8,10 @@ void GeneratorVisitor::Behavior() {
 
     if (dayTime != NIGHT) { // visitors not generated at night
         if (!weekend) {
+            workingDayNumberOfVisitors++;
             visitorTimeGeneration += 5;
+        } else {
+            weekendDayNumberOfVisitors++;
         }
 
         if (!sunny) {

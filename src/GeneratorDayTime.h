@@ -14,7 +14,8 @@ enum DayTime {
     NIGHT
 };
 
-static DayTime dayTime = NIGHT;
+extern DayTime dayTime;
+extern bool wind;
 
 class GeneratorDayTime: public Event {
     private:

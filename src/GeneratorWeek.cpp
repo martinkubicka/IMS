@@ -1,5 +1,7 @@
 #include "GeneratorWeek.h"
 
+bool weekend = true;
+
 void GeneratorWeek::Behavior() {
     if (weekend) { // working week
         weekend = false;

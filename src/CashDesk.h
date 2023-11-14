@@ -5,8 +5,8 @@
 
 #define CASHDESK 5
 
-static bool cashDeskOpened = false;
+extern bool cashDeskOpened;
 
-static Facility CashDesk[CASHDESK];
+extern Facility CashDesk[CASHDESK];
 
 #endif

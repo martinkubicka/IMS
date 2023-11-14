@@ -1,12 +1,10 @@
 #include "GeneratorVisitor.h"
 
-
-
 void GeneratorVisitor::Behavior() {
-    (void) wind;
+    (void)wind;
     (void)cashDeskOpened;
 
-    int visitorTimeGeneration = 1; // minutes (weekend, sunny, morning)
+    int visitorTimeGeneration = 1; // minutes (weekend, sunny, morning
 
     if (dayTime != NIGHT) { // visitors not generated at night
         if (!weekend) {

@@ -5,9 +5,9 @@
 #include "macros.h"
 #include "Slope.h"
 #include "GeneratorDayTime.h"
+#include "Visitor.h"
 
-static bool sunny = true;
-static bool wind = false;
+extern bool sunny;
 
 class GeneratorWeather: public Event {
     private:

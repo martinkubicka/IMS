@@ -4,7 +4,7 @@
 #include "simlib.h"
 #include "macros.h"
 
-static bool weekend = true;
+extern bool weekend;
 
 class GeneratorWeek: public Event {
     private:

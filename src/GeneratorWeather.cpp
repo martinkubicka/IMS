@@ -1,21 +1,19 @@
 #include "GeneratorWeather.h"
 
+bool sunny = true;
+
 void GeneratorWeather::SetWind(bool windStatus) {
     wind = windStatus;
 
-    for (auto &slope : RedSlopesCableCar) {
-        if (!slope.isFailure && dayTime != NIGHT) {
-            slope.isRunning = !wind;
-        }
-    }
-
     for(auto &slope : BlackSlopesCableCar) {
-        if (!slope.isFailure && dayTime != NIGHT) {
+        if (dayTime != NIGHT) {
             slope.isRunning = !wind;
+
+            if (!slope.isRunning) { // clearing queue if not running
+                slope.ClearQueue1();
+            }
         }
     }
-
-    // TODO vyprazdnit frontu
 }
 
 void GeneratorWeather::Behavior() {

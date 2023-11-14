@@ -1,5 +1,8 @@
 #include "GeneratorDayTime.h"
 
+DayTime dayTime = NIGHT;
+bool wind = false;
+
 void GeneratorDayTime::ActivateSlopes() {
     for (auto &slope : BlueSlopesSkiLift) {
         slope.isRunning = true;
@@ -9,30 +12,25 @@ void GeneratorDayTime::ActivateSlopes() {
         slope.isRunning = true;
     }
 
-    for (auto &slope : RedSlopesCableCar) {
-        slope.isRunning = true;
-    }
-
     for(auto &slope : BlackSlopesCableCar) {
-        slope.isRunning = true;
+        slope.isRunning = wind ? false : true;
     }
 }
 
 void GeneratorDayTime::PassivateSlopes() {
     for (auto &slope : BlueSlopesSkiLift) {
         slope.isRunning = false;
+        slope.ClearQueue1();
     }
 
     for (auto &slope : RedSlopesSkiLift) {
         slope.isRunning = false;
-    }
-
-    for (auto &slope : RedSlopesCableCar) {
-        slope.isRunning = false;
+        slope.ClearQueue1();        
     }
 
     for(auto &slope : BlackSlopesCableCar) {
         slope.isRunning = false;
+        slope.ClearQueue1();
     }
 }
 

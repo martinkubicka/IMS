@@ -3,8 +3,8 @@ CFLAGS = -std=c++20 -g -pedantic -Wall -Wextra
 
 all: main
 
-main: main.o GeneratorWeek.o GeneratorVisitor.o GeneratorWeather.o GeneratorDayTime.o Visitor.o	
-	$(CC) $(CFLAGS) main.o GeneratorWeek.o GeneratorVisitor.o GeneratorWeather.o GeneratorDayTime.o Visitor.o -o main -lsimlib -lm
+main: main.o GeneratorWeek.o GeneratorVisitor.o GeneratorWeather.o GeneratorDayTime.o Slope.o Visitor.o	GeneratorFailure.o Repair.o Skilift.o CableCar.o
+	$(CC) $(CFLAGS) main.o GeneratorWeek.o GeneratorVisitor.o GeneratorWeather.o GeneratorDayTime.o Slope.o Visitor.o GeneratorFailure.o Repair.o Skilift.o CableCar.o -o main -lsimlib -lm
 
 main.o:
 	$(CC) $(CFLAGS) -c src/main.cpp -o main.o -lsimlib -lm
@@ -21,8 +21,23 @@ GeneratorWeather.o:
 GeneratorDayTime.o:
 	$(CC) $(CFLAGS) -c src/GeneratorDayTime.cpp -o GeneratorDayTime.o -lsimlib -lm
 
+Slope.o:
+	$(CC) $(CFLAGS) -c src/Slope.cpp -o Slope.o -lsimlib -lm
+
 Visitor.o:
 	$(CC) $(CFLAGS) -c src/Visitor.cpp -o Visitor.o -lsimlib -lm
+
+GeneratorFailure.o:
+	$(CC) $(CFLAGS) -c src/GeneratorFailure.cpp -o GeneratorFailure.o -lsimlib -lm
+
+Repair.o:
+	$(CC) $(CFLAGS) -c src/Repair.cpp -o Repair.o -lsimlib -lm
+
+Skilift.o:
+	$(CC) $(CFLAGS) -c src/Skilift.cpp -o Skilift.o -lsimlib -lm
+
+CableCar.o:
+	$(CC) $(CFLAGS) -c src/CableCar.cpp -o CableCar.o -lsimlib -lm
 
 zip:
 	tar -czvf TODO.tar Makefile src/

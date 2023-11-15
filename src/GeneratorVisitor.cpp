@@ -1,20 +1,28 @@
+/**
+ * @file GeneratorVisitor.cpp
+ * @author Martin Kubicka (xkubic45)
+ * @date 10.12.2023
+ * @brief Definitions of GeneratorVisitor class.
+*/ 
+
 #include "GeneratorVisitor.h"
 
 void GeneratorVisitor::Behavior() {
+    // avoid unused parameters warnings
     (void)wind;
     (void)cashDeskOpened;
 
-    int visitorTimeGeneration = 1; // minutes (weekend, sunny, morning
+    int visitorTimeGeneration = 1; // minutes (based on weekend, sunny, morning etc..)
 
-    if (dayTime != NIGHT) { // visitors not generated at night
-        if (!weekend) {
-            workingDayNumberOfVisitors++;
+    if (dayTime != NIGHT) { // visitors not being generated at night
+        if (!weekend) { // working day
+            workingDayNumberOfVisitors++; // statistics
             visitorTimeGeneration += 5;
         } else {
-            weekendDayNumberOfVisitors++;
+            weekendDayNumberOfVisitors++; // statistics
         }
 
-        if (!sunny) {
+        if (!sunny) { // not sunny
             visitorTimeGeneration += 5;
         }
 
@@ -41,3 +49,5 @@ void GeneratorVisitor::Behavior() {
 
     Activate(Time + Exponential(visitorTimeGeneration));
 }
+
+/*** End of GeneratorVisitor.cpp ***/

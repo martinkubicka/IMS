@@ -1,3 +1,10 @@
+/**
+ * @file Statistics.cpp
+ * @author Martin Kubicka (xkubic45)
+ * @date 10.12.2023
+ * @brief Definitions of statistics.
+*/
+
 #include "Statistics.h"
 
 Histogram VisitorInSystem("Time spent by visitor in system (Hours)", 0, HOUR, 8);
@@ -19,3 +26,5 @@ void PrintStatistics() {
     RedSlopesQueueLength.Output();
     BlackSlopesQueueLength.Output();
 }
+
+/*** End of Statistics.cpp ***/

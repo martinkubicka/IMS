@@ -1,3 +1,10 @@
+/**
+ * @file GeneratorFailure.h
+ * @author Martin Kubicka (xkubic45)
+ * @date 10.12.2023
+ * @brief Declaration of GeneratorFailure class used for generating failures in system.
+*/
+
 #ifndef FAILURE_H
 #define FAILURE_H
 
@@ -5,15 +12,29 @@
 #include "Visitor.h"
 #include "Repair.h"
 
+/**
+ * @class GeneratorFailure
+ *
+ * @brief Class which generates failures in the system.
+ */
 class GeneratorFailure: public Event {
     public:
-        explicit GeneratorFailure(Slope* slope);
+        /**
+         * @brief Constructor of GeneratorFailure class.
+         * 
+         * @param slope pointer to slope on which failure will be generated
+         */
+        GeneratorFailure(Slope* slope);
 
     private:
-        Slope* slope;
+        Slope* slope; // pointer to slope on which failure will be generated
         
-        void Behavior();
+        /**
+         * @brief Behavior of generating failure event.
+         */
+        void Behavior(); 
 };
 
-
 #endif
+
+/*** End of GeneratorFailure.h ***/

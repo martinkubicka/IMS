@@ -1,9 +1,16 @@
+/**
+ * @file Visitor.cpp
+ * @author Martin Kubicka (xkubic45)
+ * @date 10.12.2023
+ * @brief Declaration of Visitor class and class methods.
+*/
+
 #include "Visitor.h"
 
 void Visitor::Ticket() {
     if (Random() <= 0.4 && !cashDeskOpened) { // ticket not bought online
         int shortestQueue = 0;
-        for (int i = 0; i < CASHDESK; i++) { // finding the shortest queue
+        for (int i = 0; i < CASHDESK; i++) { // choosing the shortest queue
             if (CashDesk[i].QueueLen() < CashDesk[shortestQueue].QueueLen()) {
                 shortestQueue = i;
             }
@@ -126,6 +133,7 @@ void Visitor::Pause(double rideProbability, double homeProbability) {
     Wait(Uniform(10, 40)); // eating
     Wait(Uniform(1, 5)); // going back to ski area
 
+    // cant go to pause again after pause
     if (rideProbability < homeProbability) {
         if (Random() <= rideProbability) {
             Ride();
@@ -152,7 +160,7 @@ void Visitor::Ride() {
 
     GoUp(slope);
    
-    switch(experience) {
+    switch(experience) { // speed of ride based on experience
         case EXPERT:
             Wait(Uniform(slope->length/EXPERT_SPEED - 1, slope->length/EXPERT_SPEED + 1));
             break;
@@ -192,7 +200,7 @@ void Visitor::GoUp(Slope *slope) {
             VisitorInQueueWorkWeek(Time - inQueue);
         }
 
-        Wait(0.08); // 5 seconds
+        Wait(0.08); // 5 seconds 0.08
         if (interrupted) {
             Ride();
             return;
@@ -340,9 +348,9 @@ void Visitor::WhatToDo() {
 }
 
 void Visitor::Behavior() {
-    double arrival = Time;
+    double arrival = Time; // statistics of time spent in system
 
-    experience = (Experience)((int)(Random()*3));
+    experience = (Experience)((int)(Random()*3)); // random experience
 
     Wait(Uniform(2, 5)); // going to/around cash desks
 
@@ -354,3 +362,5 @@ void Visitor::Behavior() {
 
     VisitorInSystem(Time - arrival);
 }   
+
+/*** End of Visitor.cpp ***/

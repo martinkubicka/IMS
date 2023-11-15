@@ -10,8 +10,10 @@
 // defining global variables
 DayTime dayTime = NIGHT;
 bool wind = false;
-int workingDayNumberOfVisitors = 0;
-int weekendDayNumberOfVisitors = 0;
+int workingDayNumberOfVisitorsNotHolidays = 0;
+int weekendDayNumberOfVisitorsNotHolidays = 0;
+int workingDayNumberOfVisitorsHolidays = 0;
+int weekendDayNumberOfVisitorsHolidays = 0;
 
 void GeneratorDayTime::ActivateSlopes() {
     for (auto &slope : BlueSlopesSkiLift) {
@@ -49,12 +51,18 @@ void GeneratorDayTime::Behavior() {
     {
         case NIGHT: // will be morning
             // statistics
-            if (weekend) { // weekend
-                NumberOfVisitorsDuringWeekend(weekendDayNumberOfVisitors);
-                weekendDayNumberOfVisitors = 0;
-            } else { // working week
-                NumberOfVisitorsDuringWorkWeek(workingDayNumberOfVisitors);
-                workingDayNumberOfVisitors = 0;
+            if (weekend && holidays) {
+                NumberOfVisitorsDuringWeekendHolidays(weekendDayNumberOfVisitorsHolidays);
+                weekendDayNumberOfVisitorsHolidays = 0;
+            } else if (weekend && !holidays) {
+                NumberOfVisitorsDuringWeekendNotHolidays(weekendDayNumberOfVisitorsNotHolidays);
+                weekendDayNumberOfVisitorsNotHolidays = 0;
+            } else if (!weekend && holidays) {
+                NumberOfVisitorsDuringWorkWeekHolidays(workingDayNumberOfVisitorsHolidays);
+                workingDayNumberOfVisitorsHolidays = 0;
+            } else if (!weekend && !holidays) {
+                NumberOfVisitorsDuringWorkWeekNotHolidays(workingDayNumberOfVisitorsNotHolidays);
+                workingDayNumberOfVisitorsNotHolidays = 0;
             }
 
             dayTime = MORNING;

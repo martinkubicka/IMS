@@ -3,8 +3,8 @@ CFLAGS = -std=c++20 -g -pedantic -Wall -Wextra
 
 all: main
 
-main: main.o GeneratorWeek.o GeneratorVisitor.o GeneratorWeather.o GeneratorDayTime.o Slope.o Visitor.o	GeneratorFailure.o Repair.o Skilift.o CableCar.o Statistics.o
-	$(CC) $(CFLAGS) main.o GeneratorWeek.o GeneratorVisitor.o GeneratorWeather.o GeneratorDayTime.o Slope.o Visitor.o GeneratorFailure.o Repair.o Skilift.o CableCar.o Statistics.o -o main -lsimlib -lm
+main: main.o GeneratorWeek.o GeneratorVisitor.o GeneratorWeather.o GeneratorDayTime.o Slope.o Visitor.o	GeneratorFailure.o Repair.o Skilift.o CableCar.o Statistics.o GeneratorHolidays.o
+	$(CC) $(CFLAGS) main.o GeneratorWeek.o GeneratorVisitor.o GeneratorWeather.o GeneratorDayTime.o Slope.o Visitor.o GeneratorFailure.o Repair.o Skilift.o CableCar.o Statistics.o GeneratorHolidays.o -o main -lsimlib -lm
 
 main.o:
 	$(CC) $(CFLAGS) -c src/main.cpp -o main.o -lsimlib -lm
@@ -41,6 +41,9 @@ CableCar.o:
 
 Statistics.o:
 	$(CC) $(CFLAGS) -c src/Statistics.cpp -o Statistics.o -lsimlib -lm
+
+GeneratorHolidays.o:
+	$(CC) $(CFLAGS) -c src/GeneratorHolidays.cpp -o GeneratorHolidays.o -lsimlib -lm
 
 zip:
 	zip -r T4_xkubic45.zip Makefile src/ dokumentacia.pdf

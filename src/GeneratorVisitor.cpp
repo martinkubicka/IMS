@@ -15,11 +15,23 @@ void GeneratorVisitor::Behavior() {
     int visitorTimeGeneration = 1; // minutes (based on weekend, sunny, morning etc..)
 
     if (dayTime != NIGHT) { // visitors not being generated at night
-        if (!weekend) { // working day
-            workingDayNumberOfVisitors++; // statistics
+        // statistics
+        if (weekend && holidays) {
+            weekendDayNumberOfVisitorsNotHolidays++;
+        } else if (weekend && !holidays) {
+            weekendDayNumberOfVisitorsNotHolidays++;
+        } else if (!weekend && holidays) {
+            workingDayNumberOfVisitorsHolidays++;
+        } else if (!weekend && !holidays) {
+            workingDayNumberOfVisitorsNotHolidays++;
+        }
+        
+        if (!holidays) {
             visitorTimeGeneration += 5;
-        } else {
-            weekendDayNumberOfVisitors++; // statistics
+        }
+
+        if (!weekend) { // working day
+            visitorTimeGeneration += 5;
         }
 
         if (!sunny) { // not sunny

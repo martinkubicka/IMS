@@ -8,20 +8,28 @@
 #include "Statistics.h"
 
 Histogram VisitorInSystem("Time spent by visitor in system (Hours)", 0, HOUR, 8);
-Histogram NumberOfVisitorsDuringWeekend("Number of visitor during weekend day", 0, 500, 10000/500);
-Histogram NumberOfVisitorsDuringWorkWeek("Number of visitor during work day", 0, 500, 10000/500);
-Histogram VisitorInQueueWeekend("Time spent by visitor in queue during weekend (Minutes)", 0, 5, HOUR/5);
-Histogram VisitorInQueueWorkWeek("Time spent by visitor in queue during work week (Minutes)", 0, 5, HOUR/5);
+Histogram NumberOfVisitorsDuringWeekendNotHolidays("Number of visitor during weekend day (not holidays)", 0, 500, 10000/500);
+Histogram NumberOfVisitorsDuringWorkWeekNotHolidays("Number of visitor during work day (not holidays)", 0, 500, 10000/500);
+Histogram NumberOfVisitorsDuringWeekendHolidays("Number of visitor during weekend day (holidays)", 0, 500, 10000/500);
+Histogram NumberOfVisitorsDuringWorkWeekHolidays("Number of visitor during work day (holidays)", 0, 500, 10000/500);
+Histogram VisitorInQueueWeekendNotHolidays("Time spent by visitor in queue during weekend (not holidays) (Minutes)", 0, 5, HOUR/5);
+Histogram VisitorInQueueWorkWeekNotHolidays("Time spent by visitor in queue during work week (not holidays) (Minutes)", 0, 5, HOUR/5);
+Histogram VisitorInQueueWeekendHolidays("Time spent by visitor in queue during weekend (holidays) (Minutes)", 0, 5, HOUR/5);
+Histogram VisitorInQueueWorkWeekHolidays("Time spent by visitor in queue during work week (holidays) (Minutes)", 0, 5, HOUR/5);
 Histogram BlueSlopesQueueLength("Blue slopes queue length", 0, 5, 100/5);
 Histogram RedSlopesQueueLength("Red slopes queue length", 0, 5, 100/5);
 Histogram BlackSlopesQueueLength("Black slopes queue length", 0, 5, 100/5);
 
 void PrintStatistics() {
     VisitorInSystem.Output();
-    NumberOfVisitorsDuringWeekend.Output();
-    NumberOfVisitorsDuringWorkWeek.Output();
-    VisitorInQueueWeekend.Output();
-    VisitorInQueueWorkWeek.Output();
+    NumberOfVisitorsDuringWeekendNotHolidays.Output();
+    NumberOfVisitorsDuringWorkWeekNotHolidays.Output();
+    NumberOfVisitorsDuringWeekendHolidays.Output();
+    NumberOfVisitorsDuringWorkWeekHolidays.Output();
+    VisitorInQueueWeekendNotHolidays.Output();
+    VisitorInQueueWorkWeekNotHolidays.Output();
+    VisitorInQueueWeekendHolidays.Output();
+    VisitorInQueueWorkWeekHolidays.Output();
     BlueSlopesQueueLength.Output();
     RedSlopesQueueLength.Output();
     BlackSlopesQueueLength.Output();

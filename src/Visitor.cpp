@@ -194,10 +194,14 @@ void Visitor::GoUp(Slope *slope) {
     if (slope->type == SKI_LIFT) {
         Seize(*slope->facility); // platform
 
-        if (weekend) {
-            VisitorInQueueWeekend(Time - inQueue);
-        } else {
-            VisitorInQueueWorkWeek(Time - inQueue);
+        if (weekend && holidays) {
+            VisitorInQueueWeekendHolidays(Time - inQueue);
+        } else if (weekend && !holidays) {
+            VisitorInQueueWeekendNotHolidays(Time - inQueue);
+        } else if (!weekend && holidays) {
+            VisitorInQueueWorkWeekHolidays(Time - inQueue);
+        } else if (!weekend && !holidays) {
+            VisitorInQueueWorkWeekNotHolidays(Time - inQueue);
         }
 
         Wait(0.08); // 5 seconds 0.08

@@ -13,6 +13,7 @@
 #include "CashDesk.h"
 #include "Slope.h"
 #include "Statistics.h"
+#include "GeneratorHolidays.h"
 
 // represent day time
 enum DayTime {
@@ -26,8 +27,10 @@ enum DayTime {
 // declaration of global variables
 extern DayTime dayTime;
 extern bool wind;
-extern int workingDayNumberOfVisitors;
-extern int weekendDayNumberOfVisitors;
+extern int workingDayNumberOfVisitorsNotHolidays;
+extern int weekendDayNumberOfVisitorsNotHolidays;
+extern int workingDayNumberOfVisitorsHolidays;
+extern int weekendDayNumberOfVisitorsHolidays;
 
 /**
  * @class GeneratorDayTime

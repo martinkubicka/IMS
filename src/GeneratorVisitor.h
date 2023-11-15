@@ -14,6 +14,7 @@
 #include "Visitor.h"
 #include "GeneratorDayTime.h"
 #include "GeneratorWeather.h"
+#include "GeneratorHolidays.h"
 
 /**
  * @class GeneratorVisitor

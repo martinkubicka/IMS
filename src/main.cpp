@@ -57,11 +57,9 @@ int main() {
 
 /*** End of main.cpp ***/
 
-// todo valgrind
-
-// rozumne upravit statistiky
+// todo pridat generaovnie zakaznikov Prazdniny + pridat do statistik
 // todo prepisat automaticky generaovanie slope/facility (slope.h) podla enum
-
+// rozumne upravit statistiky (podla realnych dat)
 // testovanie s roznymi params (viac zakaznikov, prepazky, viac vlekov/cabincarov, vacsia kapacita sedaciek, menej sedaciek/liftov v store,lzsie zjadovky)
-// dokumentacia
-// precitat zadanie
+// dokumentacia (zadanie + demo)
+

@@ -43,7 +43,7 @@ Statistics.o:
 	$(CC) $(CFLAGS) -c src/Statistics.cpp -o Statistics.o -lsimlib -lm
 
 zip:
-	tar -czvf TODO.tar Makefile src/
+	zip -r T4_xkubic45.zip Makefile src/ dokumentacia.pdf
 
 clean:
 	rm -f *.o main

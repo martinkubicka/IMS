@@ -49,9 +49,9 @@ int main() {
     for (auto &slope : BlackSlopesCableCar) {
         (new GeneratorFailure(&slope))->Activate();
     }
-
-    (new GeneratorVisitor)->Activate();
 	
+    (new GeneratorVisitor)->Activate();
+
 	Run();
 
     PrintStatistics();
@@ -59,9 +59,7 @@ int main() {
 
 /*** End of main.cpp ***/
 
-
-// todo prepisat automaticky generaovanie slope/facility (slope.h) podla enum
-// rozumne upravit statistiky (podla realnych dat)
+// todo red na cablecar
 // testovanie s roznymi params (viac zakaznikov, prepazky, viac vlekov/cabincarov, vacsia kapacita sedaciek, menej sedaciek/liftov v store,lzsie zjadovky)
 // dokumentacia (zadanie + demo)
 

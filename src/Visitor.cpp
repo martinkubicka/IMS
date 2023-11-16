@@ -17,7 +17,7 @@ void Visitor::Ticket() {
         }
 
         Seize(CashDesk[shortestQueue]);
-        Wait(Exponential(3)); // buying a ticket
+        Wait(Exponential(3*MINUTE)); // buying a ticket
         Release(CashDesk[shortestQueue]);
     }
 }
@@ -86,7 +86,7 @@ Slope* Visitor::ChooseSlopeBasedOnDifficulty(SlopeDifficulty difficulty) {
 SlopeDifficulty Visitor::ChooseSlopeColorBasedOnExperience() {
     switch(this->experience) { // choosing slope based on experience
         case NEWBIE:
-            if (Random() <= 0.5) { // hard slope
+            if (Random() <= 0.1) { // hard slope
                 return BLACK;
             } else { // medium or easy slope
                 if (Random() <= 0.1) { // medium slope
@@ -99,7 +99,7 @@ SlopeDifficulty Visitor::ChooseSlopeColorBasedOnExperience() {
             break;
 
         case REGULAR:
-            if (Random() <= 0.4) { // hard slope
+            if (Random() <= 0.3) { // hard slope
                 return BLACK;
             } else { // medium or easy slope
                 if (Random() <= 0.3) { // easy slope
@@ -112,7 +112,7 @@ SlopeDifficulty Visitor::ChooseSlopeColorBasedOnExperience() {
         
         case EXPERT:
             if (Random() <= 0.3) { // medium or easy slope
-                if (Random() <= 0.2) { // easy slope
+                if (Random() <= 0.1) { // easy slope
                     return BLUE;
                 } else { // medium slope
                     return RED;
@@ -129,9 +129,14 @@ SlopeDifficulty Visitor::ChooseSlopeColorBasedOnExperience() {
 }
 
 void Visitor::Pause(double rideProbability, double homeProbability) {
-    Wait(Uniform(1, 5)); // choosing restaurant and going there
-    Wait(Uniform(10, 40)); // eating
-    Wait(Uniform(1, 5)); // going back to ski area
+    Wait(Uniform(MINUTE, 5*MINUTE)); // choosing restaurant and going there
+    Wait(Uniform(10*MINUTE, 40*MINUTE)); // eating
+    Wait(Uniform(1*MINUTE, 5*MINUTE)); // going back to ski area
+
+    if (dayTime == NIGHT) {
+        Home();
+        return;
+    }
 
     // cant go to pause again after pause
     if (rideProbability < homeProbability) {
@@ -159,18 +164,18 @@ void Visitor::Ride() {
     }
 
     GoUp(slope);
-   
+
     switch(experience) { // speed of ride based on experience
         case EXPERT:
-            Wait(Uniform(slope->length/EXPERT_SPEED - 1, slope->length/EXPERT_SPEED + 1));
+            Wait(Uniform(static_cast<double>(slope->length)/static_cast<double>(EXPERT_SPEED), static_cast<double>(slope->length)/static_cast<double>(EXPERT_SPEED) + 2*MINUTE));
             break;
         
         case REGULAR:
-            Wait(Uniform(slope->length/REGULAR_SPEED - 1, slope->length/REGULAR_SPEED + 1));
+            Wait(Uniform(static_cast<double>(slope->length)/static_cast<double>(REGULAR_SPEED), static_cast<double>(slope->length)/static_cast<double>(REGULAR_SPEED) + 2*MINUTE));
             break;
         
         case NEWBIE:
-            Wait(Uniform(slope->length/NEWBIE_SPEED - 1, slope->length/NEWBIE_SPEED + 1));
+            Wait(Uniform(static_cast<double>(slope->length)/static_cast<double>(NEWBIE_SPEED), static_cast<double>(slope->length)/static_cast<double>(NEWBIE_SPEED) + 2*MINUTE));
             break;
         
         default:
@@ -195,16 +200,16 @@ void Visitor::GoUp(Slope *slope) {
         Seize(*slope->facility); // platform
 
         if (weekend && holidays) {
-            VisitorInQueueWeekendHolidays(Time - inQueue);
+            VisitorInQueueWeekendHolidays((Time - inQueue) / MINUTE);
         } else if (weekend && !holidays) {
-            VisitorInQueueWeekendNotHolidays(Time - inQueue);
+            VisitorInQueueWeekendNotHolidays((Time - inQueue) / MINUTE);
         } else if (!weekend && holidays) {
-            VisitorInQueueWorkWeekHolidays(Time - inQueue);
+            VisitorInQueueWorkWeekHolidays((Time - inQueue) / MINUTE);
         } else if (!weekend && !holidays) {
-            VisitorInQueueWorkWeekNotHolidays(Time - inQueue);
+            VisitorInQueueWorkWeekNotHolidays((Time - inQueue) / MINUTE);
         }
 
-        Wait(0.08); // 5 seconds 0.08
+        Wait(5); // 5 seconds 0.08
         if (interrupted) {
             Ride();
             return;
@@ -225,7 +230,7 @@ void Visitor::GoUp(Slope *slope) {
         (new Skilift(1, slope))->Activate();
     } else {
         Seize(*slope->platformCableCar[shortestQueueOfChoosedCableCar]);
-        Wait(0.16); // 10 seconds 0.16
+        Wait(10); // 10 seconds
 
         if (interrupted) {
             Ride();
@@ -248,7 +253,7 @@ void Visitor::GoUp(Slope *slope) {
 }
 
 void Visitor::Home() {
-    Wait(Uniform(3, 10)); // leaving ski area
+    Wait(Uniform(3*MINUTE, 10*MINUTE)); // leaving ski area
 }
 
 void Visitor::ChoosingActivity(double morningRideProbability, double morningPauseOrHomeProbability, double morningPauseProbalility, double morningHomeProbability,
@@ -323,27 +328,27 @@ void Visitor::ChoosingActivity(double morningRideProbability, double morningPaus
 void Visitor::WhatToDo() {
     switch(experience) { // choosing what to do based on experience
         case NEWBIE:
-            ChoosingActivity(.75, .25, .90, .1, 
-                                    .25, .75, .80, .20, 
-                                    .20, .80, .30, .70, 
-                                    .10, .90, .10, .90
-                                    );
+            ChoosingActivity(.9, .1, .95, .05, 
+                            .3, .70, .95, .05, 
+                            .30, .70, .30, .70, 
+                            .10, .90, .10, .90
+                            );
             break;
 
         case REGULAR:
-            ChoosingActivity(.80, .20, .95, .5, 
-                                    .40, .60, .85, .15, 
-                                    .45, .65, .35, .65, 
-                                    .20, .80, .30, .70
-                                    );
+            ChoosingActivity(.95, .05, .98, .02, 
+                            .45, .55, .98, .02, 
+                            .45, .65, .5, .5, 
+                            .20, .80, .30, .70
+                            );
             break;
 
         case EXPERT:
-            ChoosingActivity(.85, .15, .95, .5, 
-                                    .45, .55, .90, .10, 
-                                    .50, .50, .40, .60, 
-                                    .30, .70, .40, .60
-                                    );
+            ChoosingActivity(.99, .01, .99, .01, 
+                            .5, .5, .99, .01, 
+                            .50, .50, .50, .50, 
+                            .30, .70, .40, .60
+                            );
             break;
 
         default:
@@ -351,20 +356,32 @@ void Visitor::WhatToDo() {
     }
 }
 
+void Visitor::GetRandomExperience() {
+    if (Random() < 0.7) {
+        experience = REGULAR;
+    } else {
+        if (Random() < 0.5) {
+            experience = NEWBIE;
+        } else {
+            experience = EXPERT;
+        }
+    }
+}
+
 void Visitor::Behavior() {
     double arrival = Time; // statistics of time spent in system
 
-    experience = (Experience)((int)(Random()*3)); // random experience
+    GetRandomExperience(); // generating experience
 
-    Wait(Uniform(2, 5)); // going to/around cash desks
+    Wait(Uniform(2*MINUTE, 5*MINUTE)); // going to/around cash desks
 
     Ticket();
 
-    Wait(Uniform(1, 3)); // going to ski area
+    Wait(Uniform(1*MINUTE, 3*MINUTE)); // going to ski area
 
     WhatToDo();
 
-    VisitorInSystem(Time - arrival);
+    VisitorInSystem((Time - arrival) / 60 / 60);
 }   
 
 /*** End of Visitor.cpp ***/

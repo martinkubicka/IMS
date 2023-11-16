@@ -116,6 +116,11 @@ class Visitor: public Process {
          */
         SlopeDifficulty ChooseSlopeColorBasedOnExperience();
 
+        /**
+         * @brief Method which generates random experience.
+         */
+        void GetRandomExperience();
+
 };
 
 #endif

@@ -12,12 +12,12 @@ void GeneratorVisitor::Behavior() {
     (void)wind;
     (void)cashDeskOpened;
 
-    int visitorTimeGeneration = 1; // minutes (based on weekend, sunny, morning etc..)
+    int visitorTimeGeneration = 10; // second (based on weekend, sunny, morning etc..)
 
     if (dayTime != NIGHT) { // visitors not being generated at night
         // statistics
         if (weekend && holidays) {
-            weekendDayNumberOfVisitorsNotHolidays++;
+            weekendDayNumberOfVisitorsHolidays++;
         } else if (weekend && !holidays) {
             weekendDayNumberOfVisitorsNotHolidays++;
         } else if (!weekend && holidays) {
@@ -27,29 +27,29 @@ void GeneratorVisitor::Behavior() {
         }
         
         if (!holidays) {
-            visitorTimeGeneration += 5;
+            visitorTimeGeneration += 30;
         }
 
         if (!weekend) { // working day
-            visitorTimeGeneration += 5;
+            visitorTimeGeneration += 12;
         }
 
         if (!sunny) { // not sunny
-            visitorTimeGeneration += 5;
+            visitorTimeGeneration += 30;
         }
 
         switch (dayTime)
-        {   
+        {
             case LUNCH:
-                visitorTimeGeneration += 10;
+                visitorTimeGeneration += 60;
                 break;
 
             case AFTERNOON:
-                visitorTimeGeneration += 20;
+                visitorTimeGeneration += 300;
                 break;
             
             case AFTERNOON_DESK_CLOSED:
-                visitorTimeGeneration += 30;
+                visitorTimeGeneration += 30*MINUTE;
                 break;
 
             default:

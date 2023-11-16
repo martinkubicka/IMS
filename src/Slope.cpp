@@ -7,6 +7,9 @@
 
 #include "Slope.h"
 
+#include <iostream>
+using namespace std;
+
 // blue slopes
 Slope BlueSlopesSkiLift[BLUE_SLOPE_SKI_LIFT] = {
     {BLUE, SKI_LIFT, 600},
@@ -28,10 +31,20 @@ void Slope::ClearQueue1() {
     (void)cashDeskOpened;
     (void)dayTime;
 
-    while (queue.Length() > 0) {
-        Visitor* visitor = (Visitor *)queue.GetFirst();
-        visitor->interrupted = true;
-        visitor->Activate();
+    if (type == SKI_LIFT) {
+        while (queue.Length() > 0) {
+            Visitor* visitor = (Visitor *)queue.GetFirst();
+            visitor->interrupted = true;
+            visitor->Activate();
+        }
+    } else {
+        for (int i = 0; i < SEATS_IN_CABLE_CAR; i++) {
+            while (queueCableCar[i].Length() > 0) {
+                Visitor* visitor = (Visitor *)queueCableCar[i].GetFirst();
+                visitor->interrupted = true;
+                visitor->Activate();
+            }
+        }
     }
 }
 

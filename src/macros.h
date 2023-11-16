@@ -23,7 +23,7 @@
 
 // number of skilift and cable cars
 #define BLUE_SLOPE_SKI_LIFT 2
-#define RED_SLOPE_SKI_LIFT
+#define RED_SLOPE_SKI_LIFT 1
 #define BLACK_SLOPE_CABLE_CAR 1
 
 // number of seats in cable car

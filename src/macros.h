@@ -13,25 +13,27 @@
 #define HOUR 60*60 // 1 hour
 #define MINUTE 60 // 1 minute
 
+#define RED_SLOPES_REPRESENTED_BY_SKILIFT true
+
 #define KM_H_5 285/60 // divider for speed 5 km/h
 
 #define EXPERT_SPEED 7*KM_H_5 // speed of expert skier
 #define REGULAR_SPEED 5*KM_H_5 // speed of regular skier
-#define NEWBIE_SPEED 3*KM_H_5 // speed of newbie skier
+#define NEWBIE_SPEED 1*KM_H_5 // speed of newbie skier
 
 #define CASHDESK 5 // number of cash desks in area
 
 // number of skilift and cable cars
-#define BLUE_SLOPE_SKI_LIFT 2
-#define RED_SLOPE_SKI_LIFT 1
+#define BLUE_SLOPE_SKI_LIFT 1
+#define RED_SLOPE_SKI_LIFT 2
 #define BLACK_SLOPE_CABLE_CAR 1
 
 // number of seats in cable car
 #define SEATS_IN_CABLE_CAR 4
 
 // number of skilifts and cable cars in "store"
-#define NUMBER_OF_SKILIFTS 200
-#define NUMBER_OF_CABLE_CARS 100
+#define NUMBER_OF_SKILIFTS 300
+#define NUMBER_OF_CABLE_CARS 150
 
 #endif
 

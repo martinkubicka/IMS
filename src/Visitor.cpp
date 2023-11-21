@@ -47,12 +47,26 @@ Slope* Visitor::ChooseSlopeBasedOnDifficulty(SlopeDifficulty difficulty) {
 
         case RED:
             shortestQueue = 0;
-            for (int i = 0; i < RED_SLOPE_SKI_LIFT; i++) {
-                if (RedSlopesSkiLift[i].isRunning && !RedSlopesSkiLift[i].isFailure && RedSlopesSkiLift[i].facility->QueueLen() <= RedSlopesSkiLift[shortestQueue].facility->QueueLen()) {
-                    shortestQueue = i;
-                    choosedSlope = &RedSlopesSkiLift[i];
+
+            if (RED_SLOPES_REPRESENTED_BY_SKILIFT) {
+                for (int i = 0; i < RED_SLOPE_SKI_LIFT; i++) {
+                    if (RedSlopesSkiLift[i].isRunning && !RedSlopesSkiLift[i].isFailure && RedSlopesSkiLift[i].facility->QueueLen() <= RedSlopesSkiLift[shortestQueue].facility->QueueLen()) {
+                        shortestQueue = i;
+                        choosedSlope = &RedSlopesSkiLift[i];
+                    }
+                }
+            } else {
+                for (int i = 0; i < RED_SLOPE_SKI_LIFT; i++) {
+                    for (int j = 0; j < SEATS_IN_CABLE_CAR; j++) {
+                        if (RedSlopesSkiLift[i].isRunning && !RedSlopesSkiLift[i].isFailure && RedSlopesSkiLift[i].platformCableCar[j].QueueLen() <= RedSlopesSkiLift[shortestQueue].platformCableCar[shortestQueueOfChoosedCableCar].QueueLen()) {
+                            shortestQueue = i;
+                            shortestQueueOfChoosedCableCar = j;
+                            choosedSlope = &RedSlopesSkiLift[i];
+                        }
+                    }
                 }
             }
+
 
             if (choosedSlope != nullptr) {
                 break;
@@ -185,35 +199,70 @@ void Visitor::Ride() {
     WhatToDo();
 }
 
+void Visitor::AddStats(double inQueue, Slope* slope) {
+    if (weekend && holidays) {
+        if (slope->difficulty == BLUE) {
+            VisitorInBlueQueueWeekendHolidays((Time - inQueue) / MINUTE);
+        } else if (slope->difficulty == RED) {
+            VisitorInRedQueueWeekendHolidays((Time - inQueue) / MINUTE);
+        } else {
+            VisitorInBlackQueueWeekendHolidays((Time - inQueue) / MINUTE);
+        }
+    } else if (weekend && !holidays) {
+        if (slope->difficulty == BLUE) {
+            VisitorInBlueQueueWeekendNotHolidays((Time - inQueue) / MINUTE);
+        } else if (slope->difficulty == RED) {
+            VisitorInRedQueueWeekendNotHolidays((Time - inQueue) / MINUTE);
+        } else {
+            VisitorInBlackQueueWeekendNotHolidays((Time - inQueue) / MINUTE);
+        }
+    } else if (!weekend && holidays) {
+        if (slope->difficulty == BLUE) {
+            VisitorInBlueQueueWorkWeekHolidays((Time - inQueue) / MINUTE);
+        } else if (slope->difficulty == RED) {
+            VisitorInRedQueueWorkWeekHolidays((Time - inQueue) / MINUTE);
+        } else {
+            VisitorInBlackQueueWorkWeekHolidays((Time - inQueue) / MINUTE);
+        }
+    } else if (!weekend && !holidays) {
+        if (slope->difficulty == BLUE) {
+            VisitorInBlueQueueWorkWeekNotHolidays((Time - inQueue) / MINUTE);
+        } else if (slope->difficulty == RED) {
+            VisitorInRedQueueWorkWeekNotHolidays((Time - inQueue) / MINUTE);
+        } else {
+            VisitorInBlackQueueWorkWeekNotHolidays((Time - inQueue) / MINUTE);
+        }
+    }
+}
+
 void Visitor::GoUp(Slope *slope) {
     double inQueue = Time;
 
     if (slope->difficulty == BLUE) {
         BlueSlopesQueueLength(slope->facility->QueueLen());
     } else if (slope->difficulty == RED) {
-        RedSlopesQueueLength(slope->facility->QueueLen());
+        if (RED_SLOPES_REPRESENTED_BY_SKILIFT) {
+            RedSlopesQueueLength(slope->facility->QueueLen());
+        } else {
+            RedSlopesQueueLength(slope->platformCableCar[shortestQueueOfChoosedCableCar].QueueLen());
+        }
     } else {
         BlackSlopesQueueLength(slope->platformCableCar[shortestQueueOfChoosedCableCar].QueueLen());
     }
 
     if (slope->type == SKI_LIFT) {
         Seize(*slope->facility); // platform
-
-        if (weekend && holidays) {
-            VisitorInQueueWeekendHolidays((Time - inQueue) / MINUTE);
-        } else if (weekend && !holidays) {
-            VisitorInQueueWeekendNotHolidays((Time - inQueue) / MINUTE);
-        } else if (!weekend && holidays) {
-            VisitorInQueueWorkWeekHolidays((Time - inQueue) / MINUTE);
-        } else if (!weekend && !holidays) {
-            VisitorInQueueWorkWeekNotHolidays((Time - inQueue) / MINUTE);
-        }
-
-        Wait(5); // 5 seconds 0.08
+        
         if (interrupted) {
+            interrupted = false;
             Ride();
             return;
         }
+
+        // stats
+        AddStats(inQueue, slope);
+
+        Wait(5); // 5 seconds
 
         tryagainSkiLift:
 
@@ -230,12 +279,17 @@ void Visitor::GoUp(Slope *slope) {
         (new Skilift(1, slope))->Activate();
     } else {
         Seize(*slope->platformCableCar[shortestQueueOfChoosedCableCar]);
-        Wait(10); // 10 seconds
-
+        
         if (interrupted) {
+            interrupted = false;
             Ride();
             return;
         }
+
+        // stats
+        AddStats(inQueue, slope);
+        
+        Wait(10); // 10 seconds
 
         tryagainCableCar:
 

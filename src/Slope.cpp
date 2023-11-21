@@ -7,23 +7,20 @@
 
 #include "Slope.h"
 
-#include <iostream>
-using namespace std;
-
 // blue slopes
 Slope BlueSlopesSkiLift[BLUE_SLOPE_SKI_LIFT] = {
-    {BLUE, SKI_LIFT, 600},
-    {BLUE, SKI_LIFT, 500}
+    {BLUE, SKI_LIFT, 200},
 };
 
 // red slopes
 Slope RedSlopesSkiLift[RED_SLOPE_SKI_LIFT] = {
-    {RED, SKI_LIFT, 1000}
+    {RED, SKI_LIFT, 400},
+    {RED, SKI_LIFT, 700}
 };
 
 // black slopes
 Slope BlackSlopesCableCar[BLACK_SLOPE_CABLE_CAR] = {
-    {BLACK, CABLE_CAR, 2000}
+    {BLACK, CABLE_CAR, 900}
 };
 
 void Slope::ClearQueue1() {

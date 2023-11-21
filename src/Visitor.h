@@ -121,6 +121,13 @@ class Visitor: public Process {
          */
         void GetRandomExperience();
 
+        /**
+         * @brief Method used for adding time spent in queue stats.
+         * 
+         * @param inQueue Time spent in queue.
+         * @param slope Pointer to slope to which is visitor going.
+         */
+        void AddStats(double inQueue, Slope* slope);
 };
 
 #endif

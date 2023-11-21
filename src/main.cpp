@@ -58,8 +58,3 @@ int main() {
 }
 
 /*** End of main.cpp ***/
-
-// todo red na cablecar
-// testovanie s roznymi params (viac zakaznikov, prepazky, viac vlekov/cabincarov, vacsia kapacita sedaciek, menej sedaciek/liftov v store,lzsie zjadovky)
-// dokumentacia (zadanie + demo)
-

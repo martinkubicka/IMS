@@ -12,7 +12,7 @@ void GeneratorVisitor::Behavior() {
     (void)wind;
     (void)cashDeskOpened;
 
-    int visitorTimeGeneration = 10; // second (based on weekend, sunny, morning etc..)
+    int visitorTimeGeneration = 10; // default time in seconds (based on weekend, sunny, morning etc..)
 
     if (dayTime != NIGHT) { // visitors not being generated at night
         // statistics

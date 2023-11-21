@@ -32,8 +32,8 @@
 #define SEATS_IN_CABLE_CAR 4
 
 // number of skilifts and cable cars in "store"
-#define NUMBER_OF_SKILIFTS 300
-#define NUMBER_OF_CABLE_CARS 150
+#define NUMBER_OF_SKILIFTS 100
+#define NUMBER_OF_CABLE_CARS 50
 
 #endif
 

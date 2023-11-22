@@ -21,7 +21,7 @@
 #define REGULAR_SPEED 5*KM_H_5 // speed of regular skier
 #define NEWBIE_SPEED 1*KM_H_5 // speed of newbie skier
 
-#define CASHDESK 5 // number of cash desks in area
+#define CASHDESK 3 // number of cash desks in area
 
 // number of skilift and cable cars
 #define BLUE_SLOPE_SKI_LIFT 1

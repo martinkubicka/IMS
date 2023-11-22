@@ -46,7 +46,7 @@ GeneratorHolidays.o:
 	$(CC) $(CFLAGS) -c src/GeneratorHolidays.cpp -o GeneratorHolidays.o -lsimlib -lm
 
 zip:
-	zip -r T4_xkubic45.zip Makefile src/ dokumentacia.pdf
+	zip -r T4_xkubic45.zip Makefile src/ simulacna_studia.pdf
 
 clean:
 	rm -f *.o main

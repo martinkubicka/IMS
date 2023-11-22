@@ -411,7 +411,7 @@ void Visitor::WhatToDo() {
 }
 
 void Visitor::GetRandomExperience() {
-    if (Random() < 0.7) {
+    if (Random() < 0.40) {
         experience = REGULAR;
     } else {
         if (Random() < 0.5) {
